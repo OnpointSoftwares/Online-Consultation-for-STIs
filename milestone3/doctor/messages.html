@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Page</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 56px;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        .message-container {
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .message-bubble {
+            background-color: #e2e3e5;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .reply-form {
+            margin-top: 20px;
+        }
+
+        .sender-name {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <a class="navbar-brand" href="#">Message Page</a>
+        <!-- Add navigation links or other elements as needed -->
+    </nav>
+
+    <div class="container">
+        <div class="message-container">
+            <!-- Sender's Message -->
+            <div class="message-bubble">
+                <p class="sender-name">Sender Name</p>
+                <p>Message content goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
+                    convallis libero nec nisi dapibus, vel aliquet velit fermentum.</p>
+            </div>
+
+            <!-- Reply Form -->
+            <form class="reply-form">
+                <h3>Reply to Sender</h3>
+                <div class="form-group">
+                    <textarea class="form-control" rows="3" placeholder="Type your reply here"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Reply</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

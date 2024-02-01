@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Panel</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 56px; /* Adjusted for fixed navbar */
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        #sidebar {
+            background-color: #111;
+            color: white;
+            padding-top: 20px;
+            padding-right: 10px;
+            min-height: 100vh; /* Ensure the sidebar covers the full height */
+        }
+
+        #content {
+            padding: 20px;
+        }
+
+        .nav-link {
+            color: white !important;
+        }
+
+        #system-navbar,
+        #doctor-navbar {
+            background-color: #007bff;
+        }
+
+        .navbar-brand {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- System Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="system-navbar">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#system-navbarNav"
+            aria-controls="system-navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#" style="color: white;">System</a>
+        <div class="collapse navbar-collapse" id="system-navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">System Link 1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">System Link 2</a>
+                </li>
+                <!-- Add more system links as needed -->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Doctor Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="doctor-navbar">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#doctor-navbarNav"
+            aria-controls="doctor-navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#" style="color: blue;">Doctor Panel</a>
+        <div class="collapse navbar-collapse" id="doctor-navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">View Symptoms</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Write Message</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Prescribe Medication</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Accept Appointment</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="navbar-expand-lg col-md-3 col-lg-2 d-md-block bg-dark sidebar" id="sidebar">
+                <h2>Doctor Panel</h2>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">View Symptoms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Write Message</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Prescribe Medication</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Accept Appointment</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Content -->
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" id="content">
+                <!-- Default content, you can update this based on user actions -->
+                <h2>Welcome to the Doctor Panel</h2>
+                <p>Please select an action from the sidebar.</p>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

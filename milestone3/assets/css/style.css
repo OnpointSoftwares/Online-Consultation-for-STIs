@@ -1,0 +1,93 @@
+*{
+    color: black;
+}
+body{
+    background-color:bisque;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.bg{
+    position:absolute;
+    top: 15%;
+    left: 0px;
+    bottom: 0px;
+    z-index: -1;
+    opacity: .4;
+}
+.login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 30%;
+    padding: 20px;
+    height: 500px;
+    margin-left: 35%;
+    box-shadow: inset 0 0 5px 2px #555555;
+    animation:anime2 3s ease-in-out alternate ;
+}
+form{
+    margin: 20px;
+}
+input,select{
+width:100%;
+height:5vh;
+margin-top: 10px;
+}
+select{
+    text-align: center;
+    font-size: 18px;
+}
+select:focus-visible{
+    animation:anime1 1s ease-in-out alternate ;
+}
+input::placeholder{
+    font-size: 18px;
+    text-align: center;
+}
+input:focus{
+box-shadow: 5px 5px 10px grey;
+border: 2px solid green;
+zoom:140%;
+animation:anime1 1s ease-in-out alternate ;
+}
+@keyframes anime1 {
+    from {
+        transform: scale(0%); /* corrected animation */
+        opacity: 0;
+        background-color: blue;
+        
+    }
+    to {
+        transform: scale(90%);/* corrected animation */
+        opacity: .9;
+    }
+}
+@keyframes anime2{
+    from{
+        opacity: 0;
+        background-color: transparent;
+    }
+    to{
+        opacity: .9;
+        background-color: white;
+    }
+}
+button{
+    background-color: blue;
+    color: aliceblue;
+    width:100%;
+    height:5vh;
+    margin-top: 10px;
+}
+button:hover{
+    background-color: green;
+    cursor: pointer;
+}
+.avatar{
+    width:200px;
+    height: 200px;
+    box-shadow: 5px 5px 10px black;
+}
