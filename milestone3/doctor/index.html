@@ -8,44 +8,21 @@
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            padding-top: 56px; /* Adjusted for fixed navbar */
-            background-color: #f8f9fa; /* Light gray background color */
+        /* Your existing styles remain unchanged */
+
+        /* Additional custom styles */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
         }
 
-        .container {
-            margin-top: 20px;
-        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
 
-        #sidebar {
-            background-color: #343a40; /* Dark gray background color */
-            color: #ffffff; /* White text color */
-            padding-top: 20px;
-            padding-right: 10px;
-            min-height: 100vh; /* Ensure the sidebar covers the full height */
-        }
-
-        #content {
-            padding: 20px;
-            background-color: #ffffff; /* White background color for content */
-            border-radius: 10px; /* Rounded corners for content */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for content */
-        }
-
-        .nav-link {
-            color: #ffffff !important; /* White text color for sidebar links */
-        }
-
-        .navbar {
-            background-color: #007bff !important; /* Blue navbar background color */
-        }
-
-        .navbar-light .navbar-toggler-icon {
-            background-color: #ffffff; /* White color for the navbar toggler icon */
-        }
-
-        .navbar-light .navbar-toggler {
-            border-color: rgba(0, 0, 0, 0.1); /* Slightly transparent border color for the navbar toggler */
+            to {
+                opacity: 1;
+            }
         }
     </style>
 </head>
@@ -61,15 +38,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#" style="color: #ffffff;">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" style="color: #ffffff;">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" style="color: #ffffff;">Logout</a>
-                </li>
+                <!-- ... (Your existing navigation items) ... -->
             </ul>
         </div>
     </nav>
@@ -81,24 +50,24 @@
                 <h2 style="color: #ffffff;">Doctor Panel</h2>
                 <ul class="nav flex-column">
                     <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showContent('add_symptoms')">Add Symptoms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showContent('manage_patients')">Manage Patients</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#" onclick="showContent('view_symptoms')">View Symptoms</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showContent('write_message')">Write Message</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showContent('prescribe_medication')">Prescribe Medication</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showContent('accept_appointment')">Accept Appointment</a>
+                        <a class="nav-link" href="#" onclick="showContent('prescribe_medication')">Prescribe
+                            Medication</a>
                     </li>
                 </ul>
             </nav>
 
             <!-- Content -->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" id="content">
-                <!-- Default content, you can update this based on user actions -->
-                <h2>Welcome to the Doctor Panel</h2>
+                <h2 class="mb-4">Welcome to the Doctor Panel</h2>
                 <p>Please select an action from the sidebar.</p>
             </main>
         </div>
@@ -111,24 +80,188 @@
 
     <script>
         function showContent(action) {
-            // You can customize this function to load content based on the selected action
+            const contentElement = document.getElementById('content');
+            contentElement.classList.remove('fade-in');
+
             switch (action) {
-                case 'view_symptoms':
-                    document.getElementById('content').innerHTML = '<h2>View Symptoms</h2><p>Content for viewing symptoms goes here.</p>';
+                case 'add_symptoms':
+                contentElement.innerHTML = `
+                    <h2 class="mb-4">Add Symptoms</h2>
+                    <form class="needs-validation">
+                        <div class="form-group">
+                            <label>Select Symptoms (related to STIs):</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="painful_urination" id="painful_urination">
+                                <label class="form-check-label" for="painful_urination">Painful Urination</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="abnormal_discharge" id="abnormal_discharge">
+                                <label class="form-check-label" for="abnormal_discharge">Abnormal Discharge</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="pain_during_sex" id="pain_during_sex">
+                                <label class="form-check-label" for="pain_during_sex">Pain During Sex</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="abdominal_pain" id="abdominal_pain">
+                                <label class="form-check-label" for="abdominal_pain">Abdominal Pain</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="abnormal_bleeding_women" id="abnormal_bleeding_women">
+                                <label class="form-check-label" for="abnormal_bleeding_women">Abnormal Bleeding (Women)</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="sore_throat" id="sore_throat">
+                                <label class="form-check-label" for="sore_throat">Sore Throat</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="swelling_testicles" id="swelling_testicles">
+                                <label class="form-check-label" for="swelling_testicles">Swelling of Testicles (Men)</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="rash_palms_soles" id="rash_palms_soles">
+                                <label class="form-check-label" for="rash_palms_soles">Rash on Palms or Soles</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="flu_like_symptoms" id="flu_like_symptoms">
+                                <label class="form-check-label" for="flu_like_symptoms">Flu-like Symptoms</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="genital_warts" id="genital_warts">
+                                <label class="form-check-label" for="genital_warts">Genital Warts</label>
+                            </div>
+                            <!-- Add more checkboxes for other symptoms -->
+                        </div>
+                        <button type="submit" class="btn btn-primary" onclick="predictSTI()">Add Symptoms</button>
+                    </form>
+                `;
+                break;
+                case 'manage_patients':
+                    contentElement.innerHTML = `
+                        <h2 class="mb-4">Manage Patients</h2>
+                        <button class="btn btn-success mb-3" onclick="showContent('add_patient')">Add New Patient</button>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Patient ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>John Doe</td>
+                                    <td>john.doe@example.com</td>
+                                    <td>
+                                        <button class="btn btn-info btn-sm" onclick="editPatient(1)">Edit</button>
+                                        <button class="btn btn-danger btn-sm" onclick="deletePatient(1)">Delete</button>
+                                    </td>
+                                </tr>
+                                <!-- Add more rows for additional patients -->
+                            </tbody>
+                        </table>
+                    `;
                     break;
-                case 'write_message':
-                    document.getElementById('content').innerHTML = '';
+                case 'view_symptoms':
+                    contentElement.innerHTML = `
+                        <h2 class="mb-4">View Symptoms</h2>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Symptom ID</th>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Fever</td>
+                                </tr>
+                                <!-- Add more rows for additional symptoms -->
+                            </tbody>
+                        </table>
+                    `;
                     break;
                 case 'prescribe_medication':
-                    document.getElementById('content').innerHTML = '<h2>Prescribe Medication</h2><p>Content for prescribing medication goes here.</p>';
+                    contentElement.innerHTML = `
+                        <h2 class="mb-4">Prescribe Medication</h2>
+                        <form class="needs-validation">
+                            <div class="form-group">
+                                <label for="medicationName">Medication Name:</label>
+                                <input type="text" class="form-control" id="medicationName" name="medicationName"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="dosage">Dosage:</label>
+                                <input type="text" class="form-control" id="dosage" name="dosage" required>
+                            </div>
+                            <button type="submit" class="btn btn-success">Prescribe Medication</button>
+                        </form>
+                    `;
                     break;
-                case 'accept_appointment':
-                    document.getElementById('content').innerHTML = '<h2>Accept Appointment</h2><p>Content for accepting appointments goes here.</p>';
+                case 'add_patient':
+                    contentElement.innerHTML = `
+                        <h2 class="mb-4">Add New Patient</h2>
+                        <form class="needs-validation">
+                            <div class="form-group">
+                                <label for="patientName">Patient Name:</label>
+                                <input type="text" class="form-control" id="patientName" name="patientName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="patientEmail">Patient Email:</label>
+                                <input type="email" class="form-control" id="patientEmail" name="patientEmail" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Patient</button>
+                        </form>
+                    `;
                     break;
                 default:
-                    // Default content
-                    document.getElementById('content').innerHTML = '<h2>Welcome to the Doctor Panel</h2><p>Please select an action from the sidebar.</p>';
+                    contentElement.innerHTML = `
+                        <h2 class="mb-4">Welcome to the Doctor Panel</h2>
+                        <p>Please select an action from the sidebar.</p>
+                    `;
             }
+
+            contentElement.classList.add('fade-in');
+        }
+
+        function editPatient(patientId) {
+            // Logic for editing patient
+            alert('Editing patient with ID ' + patientId);
+        }
+
+        function deletePatient(patientId) {
+            // Logic for deleting patient
+            alert('Deleting patient with ID ' + patientId);
+        }
+
+        function predictSTI() {
+            // Collect selected symptoms
+            const symptoms = [];
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            checkboxes.forEach(checkbox => {
+                symptoms.push(checkbox.value);
+            });
+
+            // Fetch API to send symptoms for prediction
+            fetch('http://127.0.0.1:5000/predict_sti', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ symptoms }),
+            })
+            .then(response => response.json())
+            .then(result => {
+                // Display the prediction result
+                const predictionResultElement = document.getElementById('predictionResult');
+                predictionResultElement.innerHTML = `<p>Prediction: ${result.prediction}</p>`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         }
     </script>
 

@@ -1,0 +1,11 @@
+Symptom_Painful_Urination,Symptom_Abnormal_Discharge,Symptom_Pain_During_Sex,Symptom_Abdominal_Pain,Symptom_Abnormal_Bleeding_Women,Symptom_Sore_Throat,Symptom_Swelling_Testicles,Symptom_Rash_Palms_Soles,Symptom_Flu_Like_Symptoms,Symptom_Genital_Warts,STI_Type
+1,0,1,0,1,0,0,0,1,0,Chlamydia
+0,1,1,1,0,0,0,1,0,0,Gonorrhea
+1,1,1,0,1,1,0,1,1,1,Syphilis
+0,0,0,1,0,1,1,0,0,0,Herpes
+1,0,0,0,0,0,0,0,1,0,HIV
+0,1,0,1,1,0,0,1,0,0,HPV
+1,1,1,1,0,0,1,0,1,1,Chlamydia
+0,0,0,0,1,1,0,0,0,0,Unknown
+1,0,0,1,0,1,0,0,1,0,Herpes
+0,1,1,0,1,0,1,1,0,0,Gonorrhea
