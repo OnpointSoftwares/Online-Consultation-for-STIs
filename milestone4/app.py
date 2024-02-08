@@ -25,7 +25,7 @@ def predict_sti():
 
         # Make prediction
         predicted_sti = model.predict([symptom_array])[0]
-
+        print(predict_sti())
         return jsonify({'predicted_sti': str(predicted_sti)})
 
     except Exception as e:

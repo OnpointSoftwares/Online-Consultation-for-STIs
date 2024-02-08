@@ -4,7 +4,7 @@ include 'db.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $userType=$_POST['userType'];
+    $userType='1';
     $sql = "SELECT * FROM users WHERE email='$email'";
     $result = $conn->query($sql);
 

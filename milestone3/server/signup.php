@@ -6,7 +6,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $cpassword=$_POST['cpassword'];
-    $userType=$_POST['userType'];
     if($_POST['password']==$cpassword)
     {
         $sql1 = "SELECT * FROM users WHERE email='$email'";
@@ -16,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Existing or used email address";
         }
         else{
-    $sql = "INSERT INTO users (username, email, password,user_role) VALUES ('$username', '$email', '$password','$userType')";
+    $sql = "INSERT INTO users (username, email, password,user_role) VALUES ('$username', '$email', '$password','1')";
 
     if ($conn->query($sql) === TRUE) {
         echo "User registered successfully!";
