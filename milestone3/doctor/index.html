@@ -7,6 +7,8 @@
     <title>Doctor Panel</title>
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <style>
         /* Your existing styles remain unchanged */
 
@@ -14,7 +16,21 @@
         .fade-in {
             animation: fadeIn 0.5s ease-in-out;
         }
-
+        .sidebar{
+            background-color: rgba(7, 7, 7, 0.8); /* Set a semi-transparent background color */
+    -webkit-backdrop-filter: blur(10px); /* Apply a blur effect to the background */
+    backdrop-filter: blur(10px);
+            height:100vh;
+        }
+        #cont{
+            float: right;
+        }
+        .nav-item{
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+            background-color: rgb(38, 38, 80);
+            width: 30vh;
+            margin-top: 20px;
+        }
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -30,45 +46,32 @@
 <body>
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-        <a class="navbar-brand" href="#" style="color: #ffffff;">Doctor Panel</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <!-- ... (Your existing navigation items) ... -->
-            </ul>
-        </div>
-    </nav>
 
-    <div class="container-fluid">
-        <div class="row">
+    <div class="container-fluid d-flex flex-row">
+        <div class="row sidebar navbar-collapse">
             <!-- Sidebar -->
-            <nav class="navbar-expand-lg col-md-3 col-lg-2 d-md-block" id="sidebar">
-                <h2 style="color: #ffffff;">Doctor Panel</h2>
-                <ul class="nav flex-column">
+            <nav class="navbar-expand-lg col-md-3 col-lg-2 d-md-block fixed-top" id="sidebar">
+                <h4 style="color: #ffffff;"><i class="fas fa-user"></i>Doctor Panel</h4>
+                <ul class="nav d-flex flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showContent('add_symptoms')">Add Symptoms</a>
+                        <a class="nav-link" href="#" onclick="showContent('add_symptoms')"><i class="fas fa-plus"></i>Add Symptoms</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showContent('manage_patients')">Manage Patients</a>
+                        <a class="nav-link" href="#" onclick="showContent('manage_patients')"><i class="fas fa-users"></i>Manage Patients</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showContent('view_symptoms')">View Symptoms</a>
+                        <a class="nav-link" href="#" onclick="showContent('view_symptoms')"><i class="fas fa-eye"></i>View Symptoms</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showContent('prescribe_medication')">Prescribe
+                        <a class="nav-link" href="#" onclick="showContent('prescribe_medication')"><i class="fas fa-prescription-bottle"></i>Prescribe
                             Medication</a>
                     </li>
                 </ul>
             </nav>
-<div id="predictionResult"></div>
 
 </div>
             <!-- Content -->
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" id="content">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" id="content" style="background-color: aliceblue;">
                 <h2 class="mb-4">Welcome to the Doctor Panel</h2>
                 <p>Please select an action from the sidebar.</p>
             </main>
@@ -88,54 +91,77 @@
             switch (action) {
                 case 'add_symptoms':
                 contentElement.innerHTML = `
-                    <h2 class="mb-4">Add Symptoms</h2>
-                    <form class="needs-validation">
-                        <div class="form-group">
-                            <label>Select Symptoms (related to STIs):</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="painful_urination" id="painful_urination">
-                                <label class="form-check-label" for="painful_urination">Painful Urination</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="abnormal_discharge" id="abnormal_discharge">
-                                <label class="form-check-label" for="abnormal_discharge">Abnormal Discharge</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="pain_during_sex" id="pain_during_sex">
-                                <label class="form-check-label" for="pain_during_sex">Pain During Sex</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="abdominal_pain" id="abdominal_pain">
-                                <label class="form-check-label" for="abdominal_pain">Abdominal Pain</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="abnormal_bleeding_women" id="abnormal_bleeding_women">
-                                <label class="form-check-label" for="abnormal_bleeding_women">Abnormal Bleeding (Women)</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="sore_throat" id="sore_throat">
-                                <label class="form-check-label" for="sore_throat">Sore Throat</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="swelling_testicles" id="swelling_testicles">
-                                <label class="form-check-label" for="swelling_testicles">Swelling of Testicles (Men)</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="rash_palms_soles" id="rash_palms_soles">
-                                <label class="form-check-label" for="rash_palms_soles">Rash on Palms or Soles</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="flu_like_symptoms" id="flu_like_symptoms">
-                                <label class="form-check-label" for="flu_like_symptoms">Flu-like Symptoms</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="genital_warts" id="genital_warts">
-                                <label class="form-check-label" for="genital_warts">Genital Warts</label>
-                            </div>
-                            <!-- Add more checkboxes for other symptoms -->
-                        </div>
-                        <button type="submit" class="btn btn-primary" onclick="predictSTI()">Add Symptoms</button>
-                    </form>
+                <h2 class="mb-4">Add Symptoms</h2>
+            <form class="needs-validation">
+                <div class="form-group">
+                    <label>Select Symptoms (related to STIs):</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="painful_urination" id="painful_urination">
+                        <label class="form-check-label" for="painful_urination">
+                            <i class="bi bi-check-square"></i> Painful Urination
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="abnormal_discharge" id="abnormal_discharge">
+                        <label class="form-check-label" for="abnormal_discharge">
+                            <i class="bi bi-check-square"></i> Abnormal Discharge
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="pain_during_sex" id="pain_during_sex">
+                        <label class="form-check-label" for="pain_during_sex">
+                            <i class="bi bi-check-square"></i> Pain During Sex
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="abdominal_pain" id="abdominal_pain">
+                        <label class="form-check-label" for="abdominal_pain">
+                            <i class="bi bi-check-square"></i> Abdominal Pain
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="abnormal_bleeding_women"
+                            id="abnormal_bleeding_women">
+                        <label class="form-check-label" for="abnormal_bleeding_women">
+                            <i class="bi bi-check-square"></i> Abnormal Bleeding (Women)
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="sore_throat" id="sore_throat">
+                        <label class="form-check-label" for="sore_throat">
+                            <i class="bi bi-check-square"></i> Sore Throat
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="swelling_testicles" id="swelling_testicles">
+                        <label class="form-check-label" for="swelling_testicles">
+                            <i class="bi bi-check-square"></i> Swelling of Testicles (Men)
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="rash_palms_soles" id="rash_palms_soles">
+                        <label class="form-check-label" for="rash_palms_soles">
+                            <i class="bi bi-check-square"></i> Rash on Palms or Soles
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="flu_like_symptoms" id="flu_like_symptoms">
+                        <label class="form-check-label" for="flu_like_symptoms">
+                            <i class="bi bi-check-square"></i> Flu-like Symptoms
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="genital_warts" id="genital_warts">
+                        <label class="form-check-label" for="genital_warts">
+                            <i class="bi bi-check-square"></i> Genital Warts
+                        </label>
+                    </div>
+                    <!-- Add more checkboxes with icons for other symptoms -->
+                </div>
+                <button type="submit" class="btn btn-primary" onclick="predictSTI()">
+                    <i class="bi bi-plus"></i> Add Symptoms
+                </button>
+            </form>
                 `;
                 break;
                 case 'manage_patients':
@@ -259,7 +285,8 @@
             .then(result => {
                 // Display the prediction result
                 const predictionResultElement = document.getElementById('predictionResult');
-                predictionResultElement.innerHTML = `<p>Prediction: ${result.prediction}</p>`;
+                //predictionResultElement.innerHTML = `<p>Prediction: ${result.predicted_sti}</p>`;
+                alert(result.predicted_sti);
             })
             .catch(error => {
                 console.error('Error:', error);
