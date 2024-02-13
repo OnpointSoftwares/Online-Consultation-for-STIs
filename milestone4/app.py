@@ -22,7 +22,6 @@ def predict_sti():
         # Get symptoms from the request
         data = request.get_json()
         symptoms = data['symptoms']
-
         # Prepare data for prediction
         symptom_array = prepare_data(symptoms, feature_names)
 
@@ -37,12 +36,19 @@ def predict_sti():
 def prepare_data(symptoms, feature_names):
     # Convert symptoms to a binary array (0s and 1s)
     symptom_array = np.zeros(len(feature_names))
-    for symptom in symptoms:
+    print(symptoms)
+    print(feature_names)
+    # Use a while loop to iterate through symptoms
+    i = 0
+    while i < len(symptoms):
+        symptom = symptoms[i]
         if symptom in feature_names:
             index = feature_names.index(symptom)
             symptom_array[index] = 1
+        i += 1
 
-    return symptom_array
+    return symptom_array.tolist()  # Convert to list for better JSON serialization
+
 
 # Serve the HTML page
 @app.route('/')
