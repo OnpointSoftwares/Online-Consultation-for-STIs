@@ -90,10 +90,13 @@
 
             switch (action) {
                 case 'add_symptoms':
+                    populatePatientsName();
                 contentElement.innerHTML = `
                 <h2 class="mb-4">Add Symptoms</h2>
             <form class="needs-validation">
                 <div class="form-group">
+                <select class="form-control" id="patientSelect">
+                </select>
                     <label>Select Symptoms (related to STIs):</label>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="painful_urination" id="painful_urination">
@@ -165,33 +168,50 @@
                 `;
                 break;
                 case 'manage_patients':
-                    contentElement.innerHTML = `
-                        <h2 class="mb-4">Manage Patients</h2>
-                        <button class="btn btn-success mb-3" onclick="showContent('add_patient')">Add New Patient</button>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Patient ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>John Doe</td>
-                                    <td>john.doe@example.com</td>
-                                    <td>
-                                        <button class="btn btn-info btn-sm" onclick="editPatient(1)">Edit</button>
-                                        <button class="btn btn-danger btn-sm" onclick="deletePatient(1)">Delete</button>
-                                    </td>
-                                </tr>
-                                <!-- Add more rows for additional patients -->
-                            </tbody>
-                        </table>
-                    `;
-                    break;
+                    case 'manage_patients':
+    fetch('getPatients.php') // Replace with the correct endpoint
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Build HTML content based on the retrieved data
+            contentElement.innerHTML = `
+                <h2 class="mb-4">Manage Patients</h2>
+                <button class="btn btn-success mb-3" onclick="showContent('add_patient')">Add New Patient</button>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Patient ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${data.map(patient => `
+                            <tr>
+                                <td>${patient.id}</td>
+                                <td>${patient.name}</td>
+                                <td>${patient.email}</td>
+                                <td>
+                                    <button class="btn btn-info btn-sm" onclick="editPatient(${patient.id})">Edit</button>
+                                    <button class="btn btn-danger btn-sm" onclick="deletePatient(${patient.id})">Delete</button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        })
+        .catch(error => {
+            console.error('Error fetching patient data:', error);
+            // Handle the error, for example, display an error message to the user
+            contentElement.innerHTML = `<p>Error fetching patient data: ${error.message}</p>`;
+        });
+break;
                 case 'view_symptoms':
                     contentElement.innerHTML = `
                         <h2 class="mb-4">View Symptoms</h2>
@@ -231,18 +251,23 @@
                     break;
                 case 'add_patient':
                     contentElement.innerHTML = `
-                        <h2 class="mb-4">Add New Patient</h2>
-                        <form class="needs-validation">
-                            <div class="form-group">
-                                <label for="patientName">Patient Name:</label>
-                                <input type="text" class="form-control" id="patientName" name="patientName" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="patientEmail">Patient Email:</label>
-                                <input type="email" class="form-control" id="patientEmail" name="patientEmail" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Add Patient</button>
-                        </form>
+                    <h2 class="mb-4">Add New Patient</h2>
+<form class="needs-validation" action="addPatient.php" method="POST">
+    <div class="form-group">
+        <label for="patientName">Patient Name:</label>
+        <input type="text" class="form-control" id="patientName" name="patientName" required>
+    </div>
+    <div class="form-group">
+        <label for="patientEmail">Patient Email:</label>
+        <input type="email" class="form-control" id="patientEmail" name="patientEmail" required>
+    </div>
+    <div class="form-group">
+        <label for="patientAge">Patient Age:</label>
+        <input type="number" class="form-control" id="patientAge" name="patientAge" required min="0">
+    </div>
+    <button type="submit" class="btn btn-primary">Add Patient</button>
+</form>
+
                     `;
                     break;
                 default:
@@ -264,7 +289,40 @@
             // Logic for deleting patient
             alert('Deleting patient with ID ' + patientId);
         }
+        function populatePatientsName()
+        {
+            fetch('getPatients.php') // Replace with the correct endpoint
+    .then(response => {
+        alert(response);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        const selectElement = document.getElementById('patientSelect');
 
+        // Clear existing options
+        selectElement.innerHTML = '';
+
+        // Populate options based on retrieved patient data
+        data.forEach(patient => {
+            const option = document.createElement('option');
+            option.value = patient.id; // Set the value to the patient ID or another unique identifier
+            option.textContent = patient.name; // Set the text content to the patient name
+            selectElement.appendChild(option);
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching patient data:', error);
+        // Handle the error, for example, display an error message to the user
+        const errorMessage = document.createElement('p');
+        errorMessage.textContent = `Error fetching patient data: ${error.message}`;
+        contentElement.innerHTML = '';
+        contentElement.appendChild(errorMessage);
+    });
+
+        }
         function predictSTI() {
             // Collect selected symptoms
             const symptoms = [];
