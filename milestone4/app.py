@@ -1,10 +1,18 @@
 from flask import Flask, render_template, request, jsonify
 import joblib
+import mysql.connector
 import numpy as np
 import pandas as pd
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
+DB_CONFIG = {
+    'host': 'localhost',
+    'user': 'root',
+    'password': '',
+    'database': 'hospital',
+}
+
 # Load the pre-trained model
 model = joblib.load('sti_prediction_model.joblib')  # Replace with your actual filename
 
@@ -27,7 +35,7 @@ def predict_sti():
 
         # Make prediction
         predicted_sti = model.predict([symptom_array])[0]
-        print(predicted_sti)
+        save_to_database(symptoms, predicted_sti)
         return jsonify({'predicted_sti': str(predicted_sti)})
 
     except Exception as e:
@@ -49,7 +57,22 @@ def prepare_data(symptoms, feature_names):
 
     return symptom_array.tolist()  # Convert to list for better JSON serialization
 
+def save_to_database(symptoms, predicted_sti):
+    try:
+        # Connect to the MySQL database
+        conn = mysql.connector.connect(**DB_CONFIG)
+        cursor = conn.cursor()
 
+        # Insert data into the 'predictions' table
+        cursor.execute("INSERT INTO predictions (symptoms, predictedDisease) VALUES (%s, %s)",
+                       (','.join(symptoms), predicted_sti))
+
+        # Commit the changes and close the connection
+        conn.commit()
+        conn.close()
+
+    except Exception as e:
+        print(f"Error saving to database: {e}")
 # Serve the HTML page
 @app.route('/')
 def index():
