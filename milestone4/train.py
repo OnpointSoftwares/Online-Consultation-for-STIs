@@ -5,9 +5,8 @@ from sklearn.metrics import accuracy_score, classification_report
 import joblib
 
 # Read the dataset
-df = pd.read_csv('data.csv')  # Replace with the actual filename
+df = pd.read_csv('data.csv')  
 
-# Separate features (X) and target variable (y)
 X = df.drop('STI_Type', axis=1)
 y = df['STI_Type']
 

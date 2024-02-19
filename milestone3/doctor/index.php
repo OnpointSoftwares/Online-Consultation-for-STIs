@@ -74,7 +74,7 @@
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" id="content" style="background-color: aliceblue;">
                 <h2 class="mb-4">Welcome to the Doctor Panel</h2>
                 <p>Please select an action from the sidebar.</p>
-            </main>
+            </main></br>
         </div>
     </div>
 
@@ -165,6 +165,7 @@
                     <i class="bi bi-plus"></i> Add Symptoms
                 </button>
             </form>
+            <div id="PredictionResult" class="column"></div>
                 `;
                 break;
                 case 'manage_patients':
@@ -213,24 +214,7 @@
         });
 break;
                 case 'view_symptoms':
-                    contentElement.innerHTML = `
-                        <h2 class="mb-4">View Symptoms</h2>
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Symptom ID</th>
-                                    <th>Name</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Fever</td>
-                                </tr>
-                                <!-- Add more rows for additional symptoms -->
-                            </tbody>
-                        </table>
-                    `;
+                    fetchSymptoms();
                     break;
                 case 'prescribe_medication':
                     contentElement.innerHTML = `
@@ -289,11 +273,51 @@ break;
             // Logic for deleting patient
             alert('Deleting patient with ID ' + patientId);
         }
+        function fetchSymptoms() {
+            const contentElement = document.getElementById('content');
+    fetch('getSymptoms.php')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+            alert(response);
+        })
+        .then(data => {
+            // Build HTML content based on the retrieved symptoms data
+            contentElement.innerHTML = `
+                <h2 class="mb-4">Manage Symptoms</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Symptom ID</th>
+                            <th>Name</th>
+                            <th>PredictedDisease</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${data.map(symptom => `
+                            <tr>
+                                <td>${symptom.id}</td>
+                                <td>${symptom.symptoms}</td>
+                                <td>${symptom.predictedDisease}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        })
+        .catch(error => {
+            console.error('Error fetching symptoms data:', error);
+            // Handle the error, for example, display an error message to the user
+            contentElement.innerHTML = `<div class="alert alert-danger" role="alert">Error fetching symptoms data: ${error.message}</div>`;
+        });
+}
+    
         function populatePatientsName()
         {
             fetch('getPatients.php') // Replace with the correct endpoint
     .then(response => {
-        alert(response);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -342,9 +366,8 @@ break;
             .then(response => response.json())
             .then(result => {
                 // Display the prediction result
-                const predictionResultElement = document.getElementById('predictionResult');
-                //predictionResultElement.innerHTML = `<p>Prediction: ${result.predicted_sti}</p>`;
-                alert(result.predicted_sti);
+                const predictionResultElement = document.getElementById('PredictionResult');
+                predictionResultElement.innerHTML = `<p>Prediction:<br> ${result.predicted_sti}</p>`;
             })
             .catch(error => {
                 console.error('Error:', error);

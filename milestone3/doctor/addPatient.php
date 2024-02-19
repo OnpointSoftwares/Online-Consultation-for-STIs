@@ -1,7 +1,6 @@
 <?php
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Include your database connection logic (replace with your actual connection details)
    $conn=new mysqli("localhost","root","","hospital");
    if($conn)
    {
