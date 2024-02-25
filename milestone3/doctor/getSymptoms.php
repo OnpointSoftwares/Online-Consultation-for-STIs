@@ -11,7 +11,7 @@ function getSymptoms() {
     
     $conn = new mysqli($host, $username, $password, $database);
     // Assuming you have a table named 'symptoms' with columns 'id' and 'name'
-    $sql = "SELECT id, symptoms,predictedDisease FROM predictions";
+    $sql = "SELECT id, symptoms,predictedDisease,patient_id FROM predictions";
     $result = mysqli_query($conn, $sql);
 
     $symptoms = array();

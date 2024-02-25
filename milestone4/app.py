@@ -33,12 +33,13 @@ def predict_sti():
         # Get symptoms from the request
         data = request.get_json()
         symptoms = data['symptoms']
+        print(data['user'])
         # Prepare data for prediction
         symptom_array = prepare_data(symptoms, feature_names)
         res=compare_symptoms_percentage(symptom_array)
         # Make prediction
         predicted_sti = model.predict([symptom_array])[0]
-        save_to_database(symptoms, predicted_sti)
+        save_to_database(symptoms, predicted_sti,data['user'])
         return jsonify({'predicted_sti': str(res)})
 
     except Exception as e:
@@ -58,15 +59,15 @@ def prepare_data(symptoms, feature_names):
 
     return symptom_array.tolist()  # Convert to list for better JSON serialization
 
-def save_to_database(symptoms, predicted_sti):
+def save_to_database(symptoms, predicted_sti,user):
     try:
         # Connect to the MySQL database
         conn = mysql.connector.connect(**DB_CONFIG)
         cursor = conn.cursor()
 
         # Insert data into the 'predictions' table
-        cursor.execute("INSERT INTO predictions (symptoms, predictedDisease) VALUES (%s, %s)",
-                       (','.join(symptoms), predicted_sti))
+        cursor.execute("INSERT INTO predictions (symptoms, predictedDisease,patient_id) VALUES (%s, %s,%s)",
+                       (','.join(symptoms), predicted_sti,user))
 
         # Commit the changes and close the connection
         conn.commit()
@@ -92,7 +93,7 @@ def compare_symptoms_percentage(user_symptoms):
         # Convert to percentage
         similarity_percentage = (sorted_results * 100).round(2).astype(str) + '%'
         print("Similarity Percentage:", similarity_percentage)
-        return similarity_percentage.to_dict()
+        return similarity_percentage
 
     except Exception as e:
         print("Error in compare_symptoms_percentage:", e)

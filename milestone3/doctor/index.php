@@ -20,7 +20,7 @@
             background-color: rgba(7, 7, 7, 0.8); /* Set a semi-transparent background color */
     -webkit-backdrop-filter: blur(10px); /* Apply a blur effect to the background */
     backdrop-filter: blur(10px);
-            height:100vh;
+            height:200vh;
         }
         #cont{
             float: right;
@@ -161,7 +161,7 @@
                     </div>
                     <!-- Add more checkboxes with icons for other symptoms -->
                 </div>
-                <button type="submit" class="btn btn-primary" onclick="predictSTI()">
+                <button type="submit" class="btn btn-primary" onclick="predictSTI()" style="float:right">
                     <i class="bi bi-plus"></i> Add Symptoms
                 </button>
             </form>
@@ -217,13 +217,14 @@ break;
                     fetchSymptoms();
                     break;
                 case 'prescribe_medication':
+                    populateSymptoms();
                     contentElement.innerHTML = `
                         <h2 class="mb-4">Prescribe Medication</h2>
-                        <form class="needs-validation">
+                        <form action="savePrescriptions.php" method="POST">
                             <div class="form-group">
-                                <label for="medicationName">Medication Name:</label>
-                                <input type="text" class="form-control" id="medicationName" name="medicationName"
-                                    required>
+                                <label for="medicationName">Symptoms Id:</label>
+                                <select id="symptomsSelect" class="form-control" name="symptom_id">
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="dosage">Dosage:</label>
@@ -293,6 +294,7 @@ break;
                             <th>Symptom ID</th>
                             <th>Name</th>
                             <th>PredictedDisease</th>
+                            <th>Patient Id</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -301,6 +303,7 @@ break;
                                 <td>${symptom.id}</td>
                                 <td>${symptom.symptoms}</td>
                                 <td>${symptom.predictedDisease}</td>
+                                <td>${symptom.patient_id}</td>
                             </tr>
                         `).join('')}
                     </tbody>
@@ -313,7 +316,39 @@ break;
             contentElement.innerHTML = `<div class="alert alert-danger" role="alert">Error fetching symptoms data: ${error.message}</div>`;
         });
 }
-    
+function populateSymptoms()
+        {
+            fetch('getSymptoms.php') // Replace with the correct endpoint
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        const selectElement = document.getElementById('symptomsSelect');
+
+        // Clear existing options
+        selectElement.innerHTML = '';
+
+        // Populate options based on retrieved patient data
+        data.forEach(symptom => {
+            const option = document.createElement('option');
+            option.value = symptom.id; // Set the value to the patient ID or another unique identifier
+            option.textContent = symptom.patient_id; // Set the text content to the patient name
+            selectElement.appendChild(option);
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching patient data:', error);
+        // Handle the error, for example, display an error message to the user
+        const errorMessage = document.createElement('p');
+        errorMessage.textContent = `Error fetching patient data: ${error.message}`;
+        contentElement.innerHTML = '';
+        contentElement.appendChild(errorMessage);
+    });
+
+        }
         function populatePatientsName()
         {
             fetch('getPatients.php') // Replace with the correct endpoint
@@ -332,7 +367,7 @@ break;
         // Populate options based on retrieved patient data
         data.forEach(patient => {
             const option = document.createElement('option');
-            option.value = patient.id; // Set the value to the patient ID or another unique identifier
+            option.value = patient.name; // Set the value to the patient ID or another unique identifier
             option.textContent = patient.name; // Set the text content to the patient name
             selectElement.appendChild(option);
         });
@@ -350,6 +385,7 @@ break;
         function predictSTI() {
             // Collect selected symptoms
             const symptoms = [];
+            const user=document.getElementById("patientSelect").value;
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
             checkboxes.forEach(checkbox => {
                 symptoms.push(checkbox.value);
@@ -357,22 +393,35 @@ break;
 
             // Fetch API to send symptoms for prediction
             fetch('http://127.0.0.1:5000/predict_sti', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ symptoms }),
-            })
-            .then(response => response.json())
-            .then(result => {
-                // Display the prediction result
-                const predictionResultElement = document.getElementById('PredictionResult');
-                predictionResultElement.innerHTML = `<p>Prediction:<br> ${result.predicted_sti}</p>`;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ symptoms, user }),
+})
+    .then(response => response.json())
+    .then(result => {
+        // Display the prediction result vertically
+        const predictionResultElement = document.getElementById('PredictionResult');
+        
+        // Clear previous content
+       
+        // Loop through the key-value pairs of predicted_sti
+        var splitted=result.predicted_sti.split("%");
+        console.log(splitted);
+        for (var i=0;i<10;i++)
+         {
+
+                predictionResultElement.innerHTML += `<p>${splitted[i]}%</p>`;
+
+            
         }
+    })
+    .catch(error => {
+        // Handle fetch or JSON parsing errors
+        console.error('Error:', error);
+    });
+}
     </script>
 
 </body>
