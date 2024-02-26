@@ -1,7 +1,5 @@
 <?php
 include("../server/db.php");
-
-// Function to get symptoms from the database
 function getSymptoms() {
 
     $host = "localhost";
@@ -10,7 +8,6 @@ function getSymptoms() {
     $database = "hospital";
     
     $conn = new mysqli($host, $username, $password, $database);
-    // Assuming you have a table named 'symptoms' with columns 'id' and 'name'
     $sql = "SELECT id, symptoms,predictedDisease,patient_id FROM predictions";
     $result = mysqli_query($conn, $sql);
 

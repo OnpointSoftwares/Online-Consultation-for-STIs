@@ -10,13 +10,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* Your existing styles remain unchanged */
-
-        /* Additional custom styles */
+        
         .fade-in {
             animation: fadeIn 0.5s ease-in-out;
         }
         .sidebar{
+            width:30%;
             background-color: rgba(7, 7, 7, 0.8); /* Set a semi-transparent background color */
     -webkit-backdrop-filter: blur(10px); /* Apply a blur effect to the background */
     backdrop-filter: blur(10px);
@@ -24,6 +23,7 @@
         }
         #cont{
             float: right;
+            width:70%;
         }
         .nav-item{
             box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
@@ -71,7 +71,7 @@
 
 </div>
             <!-- Content -->
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" id="content" style="background-color: aliceblue;">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" id="content" style="background-color: aliceblue;width:70%">
                 <h2 class="mb-4">Welcome to the Doctor Panel</h2>
                 <p>Please select an action from the sidebar.</p>
             </main></br>
@@ -218,6 +218,7 @@ break;
                     break;
                 case 'prescribe_medication':
                     populateSymptoms();
+                    fetchPrescription();
                     contentElement.innerHTML = `
                         <h2 class="mb-4">Prescribe Medication</h2>
                         <form action="savePrescriptions.php" method="POST">
@@ -231,7 +232,23 @@ break;
                                 <input type="text" class="form-control" id="dosage" name="dosage" required>
                             </div>
                             <button type="submit" class="btn btn-success">Prescribe Medication</button>
-                        </form>
+                            <h2 class="mb-4">Manage Prescriptions</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                    <th>ID</th>
+                        <th>Symptom ID</th>
+                        <th>prescription</th>
+                    </tr>
+                </thead>
+                <tbody id="prescriptionTableBody">
+                    <tr><td>jhkjhkh;<td></tr>
+
+                </tbody>
+            </table>
+            
+            <div id="cont"></div> <!-- Additional content if needed -->
+        </form>
                     `;
                     break;
                 case 'add_patient':
@@ -285,7 +302,6 @@ break;
             alert(response);
         })
         .then(data => {
-            // Build HTML content based on the retrieved symptoms data
             contentElement.innerHTML = `
                 <h2 class="mb-4">Manage Symptoms</h2>
                 <table class="table table-striped">
@@ -315,6 +331,59 @@ break;
             // Handle the error, for example, display an error message to the user
             contentElement.innerHTML = `<div class="alert alert-danger" role="alert">Error fetching symptoms data: ${error.message}</div>`;
         });
+}
+function fetchPrescription() {
+    const tableBody = document.getElementById('prescriptionTableBody');
+    
+    // Create a new XMLHttpRequest object
+    const xhr = new XMLHttpRequest();
+
+    // Configure it: GET-request for the specified URL
+    xhr.open('GET', 'getPrescription.php', true);
+
+    // Set up a callback function to handle the response
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            // Parse the JSON response
+            const data = JSON.parse(xhr.responseText);
+            // Populate the table with fetched prescription data
+            tableBody.innerHTML = xhr.responseText;
+
+            if (data.length > 0) {
+                data.forEach(prescription => {
+                    console.log(prescription.symptom_id);
+                    tableBody.innerHTML += `
+                        <tr>
+                            <td>${prescription.id}</td>
+                            <td>${prescription.symptoms_id}</td>
+                            <td>${prescription.prescription}</td>
+                        </tr>
+                    `;
+                });
+            } else {
+                // Display a message if no prescription data is available
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="3">No prescription data available</td>
+                    </tr>
+                `;
+            }
+        } else {
+            console.error('Error fetching prescription data. Status:', xhr.status);
+            // Handle the error, for example, display an error message to the user
+            tableBody.innerHTML = `<tr><td colspan="3">Error fetching prescription data. Status: ${xhr.status}</td></tr>`;
+        }
+    };
+
+    // Set up a callback function to handle network errors
+    xhr.onerror = function () {
+        console.error('Network error occurred');
+        // Handle the error, for example, display an error message to the user
+        tableBody.innerHTML = `<tr><td colspan="3">Network error occurred</td></tr>`;
+    };
+
+    // Send the request
+    xhr.send();
 }
 function populateSymptoms()
         {
