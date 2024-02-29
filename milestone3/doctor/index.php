@@ -232,20 +232,7 @@ break;
                                 <input type="text" class="form-control" id="dosage" name="dosage" required>
                             </div>
                             <button type="submit" class="btn btn-success">Prescribe Medication</button>
-                            <h2 class="mb-4">Manage Prescriptions</h2>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                    <th>ID</th>
-                        <th>Symptom ID</th>
-                        <th>prescription</th>
-                    </tr>
-                </thead>
-                <tbody id="prescriptionTableBody">
-                    <tr><td>jhkjhkh;<td></tr>
-
-                </tbody>
-            </table>
+                            <a href="getPrescription.php">View Past Prescriptions</a>
             
             <div id="cont"></div> <!-- Additional content if needed -->
         </form>
