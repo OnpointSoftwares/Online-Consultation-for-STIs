@@ -74,9 +74,82 @@
 </div>
             <!-- Content -->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" id="content" style="background-color: aliceblue;width:70%">
-                <h2 class="mb-4">Welcome to the Doctor Panel</h2>
-                <p>Please select an action from the sidebar.</p>
-            </main></br>
+            <h2 class="mb-4">Add Symptoms</h2>
+            <form class="needs-validation">
+                <div class="form-group">
+                <select class="form-control" id="patientSelect">
+                </select>
+                    <label>Select Symptoms (related to STIs):</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="painful_urination" id="painful_urination">
+                        <label class="form-check-label" for="painful_urination">
+                            <i class="bi bi-check-square"></i> Painful Urination
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="abnormal_discharge" id="abnormal_discharge">
+                        <label class="form-check-label" for="abnormal_discharge">
+                            <i class="bi bi-check-square"></i> Abnormal Discharge
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="pain_during_sex" id="pain_during_sex">
+                        <label class="form-check-label" for="pain_during_sex">
+                            <i class="bi bi-check-square"></i> Pain During Sex
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="abdominal_pain" id="abdominal_pain">
+                        <label class="form-check-label" for="abdominal_pain">
+                            <i class="bi bi-check-square"></i> Abdominal Pain
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="abnormal_bleeding_women"
+                            id="abnormal_bleeding_women">
+                        <label class="form-check-label" for="abnormal_bleeding_women">
+                            <i class="bi bi-check-square"></i> Abnormal Bleeding (Women)
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="sore_throat" id="sore_throat">
+                        <label class="form-check-label" for="sore_throat">
+                            <i class="bi bi-check-square"></i> Sore Throat
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="swelling_testicles" id="swelling_testicles">
+                        <label class="form-check-label" for="swelling_testicles">
+                            <i class="bi bi-check-square"></i> Swelling of Testicles (Men)
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="rash_palms_soles" id="rash_palms_soles">
+                        <label class="form-check-label" for="rash_palms_soles">
+                            <i class="bi bi-check-square"></i> Rash on Palms or Soles
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="flu_like_symptoms" id="flu_like_symptoms">
+                        <label class="form-check-label" for="flu_like_symptoms">
+                            <i class="bi bi-check-square"></i> Flu-like Symptoms
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="genital_warts" id="genital_warts">
+                        <label class="form-check-label" for="genital_warts">
+                            <i class="bi bi-check-square"></i> Genital Warts
+                        </label>
+                    </div>
+                    <!-- Add more checkboxes with icons for other symptoms -->
+                </div>
+                <button type="submit" class="btn btn-primary" onclick="predictSTI()" style="float:right">
+                    <i class="bi bi-plus"></i> Add Symptoms
+                </button>
+            </form>
+            <div id="PredictionResult" class="column"></div>
+               
+        </main></br>
         </div>
     </div>
 
@@ -86,6 +159,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
     <script>
+         populatePatientsName();
         function showContent(action) {
             const contentElement = document.getElementById('content');
             contentElement.classList.remove('fade-in');

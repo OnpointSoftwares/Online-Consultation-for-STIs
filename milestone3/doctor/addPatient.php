@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($sql) === TRUE) {
         // Redirect to a success page or display a success message
-        header("Location: index.php");
+        header("Location: addSymptoms.php");
         exit();
     } else {
         // Handle database error, you might want to log the error
